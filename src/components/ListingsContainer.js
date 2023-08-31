@@ -1,21 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListingCard from "./ListingCard";
 
 function ListingsContainer() {
-  const listings = [
-    {
-      id: 1,
-      description: "heater",
-      image: "./images/heater.jpg",
-      location: "BROOKLYN",
-    },
-    {
-      id: 2,
-      description: "2019 Toyota Tacoma grill",
-      image: "./images/toyota-grill.jpg",
-      location: "Williamsburg",
-    },
-  ];
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:6001/listings")
+      .then((response) => response.json())
+      .then((data) => setListings(data));
+  }, []);
+
   return (
     <main>
       <ul className="cards">
