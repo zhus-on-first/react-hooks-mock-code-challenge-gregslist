@@ -10,11 +10,23 @@ function ListingsContainer() {
       .then((data) => setListings(data));
   }, []);
 
+  function onDelete(listingId) {
+    fetch(`http://localhost:6001/listings/${listingId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (response.ok) {
+        setListings((prevListings) =>
+          prevListings.filter((listing) => listing.id !== listingId)
+        );
+      }
+    });
+  }
+
   return (
     <main>
       <ul className="cards">
         {listings.map((listing) => (
-          <ListingCard listing={listing} />
+          <ListingCard key={listing.id} listing={listing} onDelete={onDelete} />
         ))}
       </ul>
     </main>
